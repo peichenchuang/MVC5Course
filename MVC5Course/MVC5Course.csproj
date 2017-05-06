@@ -221,6 +221,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartial.cs" />
     <Compile Include="Models\usp_Fabrics_Result.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
