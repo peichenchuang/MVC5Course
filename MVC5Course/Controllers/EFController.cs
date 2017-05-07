@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using System.Data.Entity.Validation;
 
 namespace MVC5Course.Controllers
 {
@@ -17,7 +18,8 @@ namespace MVC5Course.Controllers
             //通常會需要轉成 AsQueryable
             var all = db.Product.AsQueryable();
             var data = all.Where(p =>
-                p.Active == true 
+                p.Active == true  &&
+                p.isDelete == false
                 //p.ProductName.Contains("Black")
             ).OrderByDescending(p=>p.ProductId).Take(10); //尚未發出 TSQL，需要用到的時候才會載入(延遲載入)
             //var data = all.Where(p => p.Active == true).ToList(); //已產生 SQL Query 並產生資料
@@ -78,12 +80,24 @@ namespace MVC5Course.Controllers
             var data = db.Product.Find(id);
 
             //更精簡的用法 => db.OrderLine.RemoveRange(data.OrderLine);
-            foreach (var item in data.OrderLine.ToList())
-            {
-                db.OrderLine.Remove(item);
-            }
+            //foreach (var item in data.OrderLine.ToList())
+            //{
+            //db.OrderLine.Remove(item);
+            //}
+            //db.Product.Remove(data);
 
-            db.Product.Remove(data);
+            //使用Try Catch 並指定 Exception 型別(C# 偵錯技巧)
+            try
+            {
+                //修改 isDeleted = 1
+                data.isDelete = true;
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+                throw ex;
+            }
+            
             db.SaveChanges();
             return RedirectToAction("Index");
         }

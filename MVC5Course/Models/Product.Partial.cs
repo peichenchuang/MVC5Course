@@ -44,7 +44,8 @@ namespace MVC5Course.Models
         [Display(Name ="數量")]
         [Range(0, 100, ErrorMessage = "請輸入正確數量(0~100)")]
         public Nullable<decimal> Stock { get; set; }
-    
+        [Display(Name ="建立時間")]
+        public System.DateTime CreatedOn { get; set; }
         public virtual ICollection<OrderLine> OrderLine { get; set; }
     }
 }
