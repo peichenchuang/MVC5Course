@@ -28,6 +28,8 @@ namespace MVC5Course.Controllers
 
         public ActionResult Details(int id)
         {
+            //效能調教的建議
+            //var data = db.Database.SqlQuery<Product>("SELECT * FROM dbo.Product WHERE ProductId=@p0", id).FirstOrDefault();
             var data = db.Product.Find(id);
             return View(data);
         }
