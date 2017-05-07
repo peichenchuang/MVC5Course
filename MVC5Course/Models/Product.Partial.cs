@@ -30,7 +30,7 @@ namespace MVC5Course.Models
         public Nullable<bool> Active { get; set; }
         [Required]
         [Display(Name ="數量")]
-        [Range(0, 100, ErrorMessage = "請輸入正確數量")]
+        [Range(0, 100, ErrorMessage = "請輸入正確數量(0~100)")]
         public Nullable<decimal> Stock { get; set; }
     
         public virtual ICollection<OrderLine> OrderLine { get; set; }
