@@ -86,19 +86,19 @@ namespace MVC5Course.Controllers
             //}
             //db.Product.Remove(data);
 
+            //修改 isDeleted = 1
+            data.isDelete = true;
+
             //使用Try Catch 並指定 Exception 型別(C# 偵錯技巧)
             try
             {
-                //修改 isDeleted = 1
-                data.isDelete = true;
+                db.SaveChanges();
             }
             catch (DbEntityValidationException ex)
             {
-
                 throw ex;
             }
             
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
     }
