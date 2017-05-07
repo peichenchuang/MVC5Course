@@ -8,7 +8,7 @@ namespace MVC5Course.Models
     using ValidationAttributes;
 
     [MetadataType(typeof(ProductMetaData))]
-    public partial class Product
+    public partial class Product : IValidatableObject
     {
         [DisplayName("訂單數量")]
         public int 訂單數量 {
@@ -20,6 +20,20 @@ namespace MVC5Course.Models
                 //return this.OrderLine.Where(p => p.Qty > 300).ToList().Count; //效能差
                 //return this.OrderLine.Where(p => p.Qty > 300).Count(); //效能差
             }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            //綜合運算 & 多重驗證
+            if(this.Price > 100 && this.Stock < 5)
+            {
+                yield return new ValidationResult("價格與庫存數量不合理", new string[] {"Price", "Stock" });
+            }
+            if (this.OrderLine.Count() > 5 && this.Stock == 0)
+            {
+                yield return new ValidationResult("Stock與訂單數量不合理", new string[] { "Stock"});
+            }
+            yield break;
         }
     }
     
