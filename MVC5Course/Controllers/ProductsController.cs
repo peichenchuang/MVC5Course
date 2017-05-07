@@ -11,6 +11,9 @@ using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
+    /// <summary>
+    /// 這是一個精簡版的產品列表
+    /// </summary>
     public class ProductsController : Controller
     {
         private FabricsEntities db = new FabricsEntities();
@@ -83,6 +86,10 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //Bind(Include = "ProductId,ProductName,Price,Active,Stock") 只接受前述 5 個欄位，減少ViewModel的數量
+        //用實體 Model 去接，但只接這五個欄位，其他欄位帶 EF 的 Default Value
+        //通常這樣驗證會比較麻煩
+        //保哥：這樣的程式碼比較不好維護，簡易採 View Model
         public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
             if (ModelState.IsValid)
@@ -144,6 +151,22 @@ namespace MVC5Course.Controllers
                         .Take(10);
 
             return View(data);
+        }
+
+        public ActionResult CreateProduct()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateProduct(ProductListVM data)
+        {
+            if (ModelState.IsValid)
+            {
+                //儲存資料進資料庫
+                return RedirectToAction("ListProducts");
+            }
+            //驗證失敗，繼續顯示原本的表單
+            return View();
         }
     }
 }
