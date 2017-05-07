@@ -4,6 +4,7 @@ namespace MVC5Course.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     [MetadataType(typeof(ProductMetaData))]
     public partial class Product
@@ -13,6 +14,10 @@ namespace MVC5Course.Models
             get
             {
                 return this.OrderLine.Count;
+                //計算符合條件的數量
+                //return this.OrderLine.Count(p => p.Qty > 300); //效能最好
+                //return this.OrderLine.Where(p => p.Qty > 300).ToList().Count; //效能差
+                //return this.OrderLine.Where(p => p.Qty > 300).Count(); //效能差
             }
         }
     }
