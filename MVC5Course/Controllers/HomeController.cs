@@ -55,5 +55,11 @@ namespace MVC5Course.Controllers
             //return Content("<script>alert('建立成功!'); location.href='/';</script>");
             return PartialView("SuccessRedirect", "/");
         }
+
+        //33 練習 FileResult 使用方式
+        public ActionResult GetFile()
+        {
+            return File(Server.MapPath("~/Content/XXX.jpg"), "image/png", "NewName.png"));
+        }
     }
 }
