@@ -18,5 +18,11 @@ namespace MVC5Course.Controllers
         {
             return Content("Hello World!");
         }
+
+        //網址被亂Try的時候 回首頁
+        protected override void HandleUnknownAction(string actionName)
+        {
+            this.RedirectToAction("Index", "Home").ExecuteResult(this.ControllerContext);
+        }
     }
 }
