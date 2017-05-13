@@ -16,13 +16,27 @@ namespace MVC5Course.Controllers
     /// </summary>
     public class ProductsController : Controller
     {
+        ProductRepository repo = RepositoryHelper.GetProductRepository();
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Products
         public ActionResult Index(bool Active = true)
         {
-                var data = db.Product
-                    .Where(p => p.Active.HasValue && p.Active.Value == Active).ToList().Take(10);
+            //錯誤示範：因為repo沒有包含資料庫連線(只有查詢邏輯)，沒有unit of work
+            //var repo = new ProductRepository();
+            //var data1 = repo.All();
+
+            //正確寫法
+            //var repo = new ProductRepository();
+            //repo.UnitOfWork = new EFUnitOfWork();
+
+            //簡潔且正確寫法
+            //var repo = RepositoryHelper.GetProductRepository();
+
+            //var data = db.Product
+            //        .Where(p => p.Active.HasValue && p.Active.Value == Active).ToList().Take(10);
+
+            var data = repo.All().Where(p => p.Active.HasValue && p.Active.Value == Active).ToList().Take(10);
 
             return View(data);
         }
@@ -35,7 +49,9 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            //Product product = db.Product.Find(id);
+            //repo 沒有 find API, 自己寫一個
+            Product product = repo.Get單筆資料byProductId(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -139,16 +155,17 @@ namespace MVC5Course.Controllers
 
         public ActionResult ProductList ()
         {
-            var data = db.Product
-                        .Where(p => p.Active == true)
-                        .Select(p => new ProductListVM()
-                        {
-                            ProductId = p.ProductId,
-                            ProductName = p.ProductName,
-                            Price = p.Price,
-                            Stock = p.Stock
-                        })
-                        .Take(10);
+            //var data = db.Product
+            //            .Where(p => p.Active == true)
+            //            .Select(p => new ProductListVM()
+            //            {
+            //                ProductId = p.ProductId,
+            //                ProductName = p.ProductName,
+            //                Price = p.Price,
+            //                Stock = p.Stock
+            //            })
+            //            .Take(10);
+            var data = repo.Get所有資料();
 
             return View(data);
         }
