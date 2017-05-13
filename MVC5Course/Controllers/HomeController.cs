@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -59,7 +59,19 @@ namespace MVC5Course.Controllers
         //33 練習 FileResult 使用方式
         public ActionResult GetFile()
         {
-            return File(Server.MapPath("~/Content/XXX.jpg"), "image/png", "NewName.png"));
+            return File(Server.MapPath("~/Content/XXX.jpg"), "image/png", "NewName.png");
+        }
+
+        public ActionResult GetJson()
+        {
+            var product =  db.Product.Take(5).ToList();
+            return Json(new
+            {
+                id = 1,
+                name = "Will",
+                CreatedOn = DateTime.Now
+            }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    //ViewData 強迫轉型
+    var data = ViewData["ppp"] as IEnumerable<MVC5Course.Models.Product>;
 }
 
 <h2>Index</h2>

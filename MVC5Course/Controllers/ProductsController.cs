@@ -38,6 +38,9 @@ namespace MVC5Course.Controllers
 
             var data = repo.GetProduct列表頁所有資料(showAll:false);
 
+            //這句可加可不加
+            ViewData.Model = data; //強型別
+            ViewData["ppp"] = data; //弱型別
             return View(data);
         }
 
@@ -166,7 +169,7 @@ namespace MVC5Course.Controllers
         //}
 
 
-        public ActionResult ProductList ()
+        public ActionResult ListProducts()
         {
             //var data = db.Product
             //            .Where(p => p.Active == true)
@@ -178,7 +181,13 @@ namespace MVC5Course.Controllers
             //                Stock = p.Stock
             //            })
             //            .Take(10);
-            var data = repo.GetProduct列表頁所有資料();
+            var data = repo.GetProduct列表頁所有資料().Select(p => new ProductListVM()
+            {
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                Price = p.Price,
+                Stock = p.Stock
+            }); ;
 
             return View(data);
         }
@@ -192,7 +201,8 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                //儲存資料進資料庫
+                //TODO: 儲存資料進資料庫
+                TempData["CreateProduct_Result"] = "資料新增成功";
                 return RedirectToAction("ListProducts");
             }
             //驗證失敗，繼續顯示原本的表單
