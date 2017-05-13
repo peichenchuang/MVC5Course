@@ -10,7 +10,16 @@
 }
 
 <h2>ProductList</h2>
-
+<form method="GET">
+    @* 表單送出，只要有model binding就會有model state *@
+    篩選：
+    @Html.TextBox("q")
+    庫存數量
+    @Html.TextBox("stockMin", "0", new { placeholder = "最小庫存量", minimum = 0})
+    -
+    @Html.TextBox("stockMax", "", new { placeholder = "最大庫存量" })
+    <button>送出</button>
+</form>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

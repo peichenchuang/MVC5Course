@@ -36,7 +36,7 @@ namespace MVC5Course.Controllers
             //var data = db.Product
             //        .Where(p => p.Active.HasValue && p.Active.Value == Active).ToList().Take(10);
 
-            var data = repo.GetProduct列表頁所有資料(showAll:false);
+            var data = repo.GetProduct列表頁所有資料(showAll: false);
 
             //這句可加可不加
             ViewData.Model = data; //強型別
@@ -140,7 +140,7 @@ namespace MVC5Course.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View(product);
         }
 
@@ -169,28 +169,32 @@ namespace MVC5Course.Controllers
         //}
 
 
-        public ActionResult ListProducts()
+        public ActionResult ListProducts(ProductListSearchVM searchCondition)
         {
-            //var data = db.Product
-            //            .Where(p => p.Active == true)
-            //            .Select(p => new ProductListVM()
-            //            {
-            //                ProductId = p.ProductId,
-            //                ProductName = p.ProductName,
-            //                Price = p.Price,
-            //                Stock = p.Stock
-            //            })
-            //            .Take(10);
-            var data = repo.GetProduct列表頁所有資料().Select(p => new ProductListVM()
-            {
-                ProductId = p.ProductId,
-                ProductName = p.ProductName,
-                Price = p.Price,
-                Stock = p.Stock
-            }); ;
+            var data = repo.GetProduct列表頁所有資料(true);
 
-            return View(data);
+            if(ModelState.IsValid)
+            {
+                if (!String.IsNullOrEmpty(searchCondition.q))
+                {
+                    data = data.Where(p => p.ProductName.Contains(searchCondition.q));
+
+                }
+                data = data.Where(p => p.Stock > searchCondition.StockMin)
+                          .Where(p => p.Stock < searchCondition.StockMax);
+            }
+            ViewData.Model = data
+                    .Select(p => new ProductListVM()
+                    {
+                        ProductId = p.ProductId,
+                        ProductName = p.ProductName,
+                        Price = p.Price,
+                        Stock = p.Stock
+                    });
+            
+            return View();
         }
+
 
         public ActionResult CreateProduct()
         {
@@ -208,5 +212,7 @@ namespace MVC5Course.Controllers
             //驗證失敗，繼續顯示原本的表單
             return View();
         }
+
+
     }
 }
