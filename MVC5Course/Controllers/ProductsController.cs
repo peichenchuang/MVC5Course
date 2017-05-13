@@ -14,7 +14,7 @@ namespace MVC5Course.Controllers
     /// <summary>
     /// 這是一個精簡版的產品列表
     /// </summary>
-    public class ProductsController : Controller
+    public class ProductsController : BaseController
     {
         ProductRepository repo = RepositoryHelper.GetProductRepository();
         //private FabricsEntities db = new FabricsEntities();
