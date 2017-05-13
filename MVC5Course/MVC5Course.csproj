@@ -398,6 +398,7 @@
     <Content Include="Views\EF\Edit.cshtml" />
     <Content Include="Views\EF\Delete.cshtml" />
     <Content Include="Views\EF\Details.cshtml" />
+    <Content Include="Views\Shared\SuccessRedirect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

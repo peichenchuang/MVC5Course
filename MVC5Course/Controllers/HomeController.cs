@@ -31,5 +31,29 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
+
+        public ActionResult PartitalAbout()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            //假如 request 是從 ajax 來的，就回傳PartialView
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("About");
+            }
+            else
+            {
+                return View("About");
+            }
+        }
+
+        public ActionResult SomeAction()
+        {
+            //盡量不要把JavaScript放在controller，所以不要用Response.Write
+            //Response.Write("<script>alert('建立成功!'); location.href='/';</script>");
+            //return "<script>alert('建立成功!'); location.href='/';</script>";
+            //return Content("<script>alert('建立成功!'); location.href='/';</script>");
+            return PartialView("SuccessRedirect", "/");
+        }
     }
 }
