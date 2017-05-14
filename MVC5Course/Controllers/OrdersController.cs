@@ -17,7 +17,8 @@ namespace MVC5Course.Controllers
         // GET: Orders
         public ActionResult Index(int ClientId)
         {
-            var order = db.Order.Where(p=> p.ClientId == ClientId).Include(o => o.Client);
+            var order = db.Order.Where(p=> p.ClientId == ClientId)
+                .Include(o => o.Client);
             return View(order.ToList());
         }
 
