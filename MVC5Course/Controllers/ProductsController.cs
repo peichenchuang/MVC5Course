@@ -20,6 +20,7 @@ namespace MVC5Course.Controllers
         //private FabricsEntities db = new FabricsEntities();
 
         // GET: Products
+        [OutputCache(Duration =5, Location =System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public ActionResult Index(bool Active = true)
         {
             //錯誤示範：因為repo沒有包含資料庫連線(只有查詢邏輯)，沒有unit of work
