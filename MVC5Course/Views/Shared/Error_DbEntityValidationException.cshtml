@@ -2,12 +2,26 @@
 
 @{
     ViewBag.Title = "Error";
-    var ex = Model.Exception as System.Data.Entity.Infrastructure.DbUpdateException;
+    var ex = Model.Exception as System.Data.Entity.Validation.DbEntityValidationException;
 }
 
-<h1 class="text-danger">/@Model.ControllerName/@Model.ActionName/Error. 傳入SQL Server 的查詢語法錯誤</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger">/@Model.ControllerName/@Model.ActionName 實體模型驗證失敗!</h1>
+<h2 class="text-danger">
+    @ex.Message
 
-<h3>@ex.Message</h3>
-<h4>@ex.InnerException</h4>
-<pre>@ex.InnerException.InnerException</pre>
+    <ol>
+        @foreach (var entity in ex.EntityValidationErrors)
+        {
+            foreach (var error in entity.ValidationErrors)
+            {
+                <li>
+                    @error.PropertyName
+                    <ul>
+                        <li>@error.ErrorMessage</li>
+                    </ul>
+                </li>
+            }
+        }
+    </ol>
+
+</h2>
