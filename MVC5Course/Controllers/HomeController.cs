@@ -18,6 +18,9 @@ namespace MVC5Course.Controllers
             //新增ShareViewBag Action Filter，可以在Action執行之前或之後，可以Run一些Code
             //ViewBag.Message = "Your application description page.";
 
+            //測試HandleErrorAttribute，隨便丟一個例外
+
+
             //用處：記錄使用者軌跡(做Log，紀錄Action使用前後的時間)、下拉清單的預設值
             return View();
         }
