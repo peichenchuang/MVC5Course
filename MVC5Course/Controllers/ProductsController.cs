@@ -126,21 +126,27 @@ namespace MVC5Course.Controllers
             //}
             //return View(product);
 
+            //Model Binding 的 Name 要跟後端的參數名稱一致
 
             //使用 formCollection 就沒有 model binding 預先驗證也就沒有 modelState
             //這樣只能使用 model binding 延遲驗證
             var product = repo.Get單筆資料byProductId(id); //先從資料庫取得完整欄位
-            if(TryUpdateModel<Product>(product)) //若只傳入 productName, price
+            if(TryUpdateModel<Product>(product)) //若只傳入 productName, price，這樣會產生 Model State
             {
                 repo.UnitOfWork.Commit(); //只會更新 productName, price 的值
-                return RedirectToAction("Index");
             }
+            return RedirectToAction("Index");
+
             //結論：若拿Model來做 Model Binding(不是用View Model)，延遲驗證的做法相對安全
 
             //Model Binding 預先驗證與延遲驗證的差異
             //當 [Active] 屬性不需要的話，[Bind(Include = "ProductId,ProductName,Price,Stock")] 
             //下次更新資料的時候，Active 會帶入預設值 false
 
+
+            // TryUpdateModel 有 10 個多載
+            //TryUpdateModel<Product>(product, new string[] { "ProductId", "ProductName", "Price", "Stock" }) 
+            //TryUpdateModel(searchCondition, "searchCondition") 第二個參數放 Prefix
         }
 
         // GET: Products/Delete/5
@@ -230,7 +236,7 @@ namespace MVC5Course.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult BatchUpdate(List<ProductUpdateBatchVM> items,)
+        public ActionResult BatchUpdate(List<ProductUpdateBatchVM> items)
         {
             if (ModelState.IsValid)
             {
