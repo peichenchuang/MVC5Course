@@ -65,7 +65,7 @@
           <Property Name="Active" Type="bit" />
           <Property Name="Stock" Type="numeric" Precision="18" Scale="3" />
           <Property Name="is刪除" Type="bit" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
         </EntityType>
         <Association Name="FK_Client_Occupation">
           <End Role="Occupation" Type="Self.Occupation" Multiplicity="0..1" />
@@ -213,7 +213,7 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="Stock" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="OrderLine" Relationship="Self.fk_OrderLine_ProductId" FromRole="Product" ToRole="OrderLine" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="None" />
           <Property Name="isDelete" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Client_Occupation">

@@ -403,6 +403,7 @@
     <Content Include="Views\EF\Delete.cshtml" />
     <Content Include="Views\EF\Details.cshtml" />
     <Content Include="Views\Shared\SuccessRedirect.cshtml" />
+    <Content Include="Views\Shared\Error_DbUpdateException.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
