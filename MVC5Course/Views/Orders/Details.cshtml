@@ -1,0 +1,58 @@
+﻿@model MVC5Course.Models.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Order</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.OrderTotal)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.OrderTotal)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.OrderStatus)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Client.FirstName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Client.FirstName)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.OrderId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
