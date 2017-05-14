@@ -405,6 +405,8 @@
     <Content Include="Views\Shared\SuccessRedirect.cshtml" />
     <Content Include="Views\Shared\Error_DbUpdateException.cshtml" />
     <Content Include="Views\Shared\Error_DbEntityValidationException.cshtml" />
+    <Content Include="Views\Home\VT.cshtml" />
+    <Content Include="Views\Home\RazorTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

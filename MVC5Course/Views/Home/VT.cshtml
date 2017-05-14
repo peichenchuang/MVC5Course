@@ -1,0 +1,22 @@
+﻿@{ 
+    Layout = "";
+}
+
+@DateTime.Now
+
+@(1*2)
+
+
+@if(ViewBag.IsEnabled)
+{
+    @:啟用
+    <span>啟用</span>
+    //不會有Tag輸出
+    <text>不會有Tag輸出</text>
+}
+else
+{
+    @:停用
+    <span>停用</span>
+
+}
