@@ -112,18 +112,35 @@ namespace MVC5Course.Controllers
         //用實體 Model 去接，但只接這五個欄位，其他欄位帶 EF 的 Default Value
         //通常這樣驗證會比較麻煩
         //保哥：這樣的程式碼比較不好維護，簡易採 View Model
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            //[Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product
+            //if (ModelState.IsValid)
+            //{
+            //    //db.Entry(product).State = EntityState.Modified;
+            //    //db.SaveChanges();
+            //    //用 Repo 取代
+            //    repo.Update(product);
+            //    repo.UnitOfWork.Commit();
+            //    return RedirectToAction("Index");
+            //}
+            //return View(product);
+
+
+            //使用 formCollection 就沒有 model binding 預先驗證也就沒有 modelState
+            //這樣只能使用 model binding 延遲驗證
+            var product = repo.Get單筆資料byProductId(id); //先從資料庫取得完整欄位
+            if(TryUpdateModel<Product>(product)) //若只傳入 productName, price
             {
-                //db.Entry(product).State = EntityState.Modified;
-                //db.SaveChanges();
-                //用 Repo 取代
-                repo.Update(product);
-                repo.UnitOfWork.Commit();
+                repo.UnitOfWork.Commit(); //只會更新 productName, price 的值
                 return RedirectToAction("Index");
             }
-            return View(product);
+            //結論：若拿Model來做 Model Binding(不是用View Model)，延遲驗證的做法相對安全
+
+            //Model Binding 預先驗證與延遲驗證的差異
+            //當 [Active] 屬性不需要的話，[Bind(Include = "ProductId,ProductName,Price,Stock")] 
+            //下次更新資料的時候，Active 會帶入預設值 false
+
         }
 
         // GET: Products/Delete/5
@@ -210,6 +227,21 @@ namespace MVC5Course.Controllers
                 return RedirectToAction("ListProducts");
             }
             //驗證失敗，繼續顯示原本的表單
+            return View();
+        }
+        [HttpPost]
+        public ActionResult BatchUpdate(List<ProductUpdateBatchVM> items,)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in items)
+                {
+                    var prod = db.Product.Find(item.ProductID);
+                    prod.Price = item.Price;
+                    prod.Stock = item.Stock;
+                }
+                db.SaveChanges();
+            }
             return View();
         }
 
