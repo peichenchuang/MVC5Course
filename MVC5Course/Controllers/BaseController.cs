@@ -13,7 +13,7 @@ namespace MVC5Course.Controllers
     public class BaseController : Controller
     {
         protected FabricsEntities db = new FabricsEntities();
-
+        [LocalOnly]
         public ActionResult Debug()
         {
             return Content("Hello World!");
