@@ -138,6 +138,7 @@ namespace MVC5Course.Controllers
             return RedirectToAction("Index");
 
             //結論：若拿Model來做 Model Binding(不是用View Model)，延遲驗證的做法相對安全
+            //可以避免資料被 Client 端誤更新
 
             //Model Binding 預先驗證與延遲驗證的差異
             //當 [Active] 屬性不需要的話，[Bind(Include = "ProductId,ProductName,Price,Stock")] 
@@ -147,6 +148,11 @@ namespace MVC5Course.Controllers
             // TryUpdateModel 有 10 個多載
             //TryUpdateModel<Product>(product, new string[] { "ProductId", "ProductName", "Price", "Stock" }) 
             //TryUpdateModel(searchCondition, "searchCondition") 第二個參數放 Prefix
+
+            //若用ViewModel Update資料， EF那邊還是需要一個一個欄位去做對應(有20個欄位就要寫20欄)
+            //用 TryUpdateModel 可以免除資料異動忘記改Binding的困擾
+            //推薦：Value Injector 這個套件自動做兩個完全不相干的 Model 的 Property Mapping
+            // Value Injector 功能簡單, Auto Mapper 功能比較強大
         }
 
         // GET: Products/Delete/5

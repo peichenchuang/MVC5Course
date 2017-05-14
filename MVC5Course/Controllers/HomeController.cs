@@ -12,11 +12,13 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
-
+        [SharedViewBag]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            //新增ShareViewBag Action Filter，可以在Action執行之前或之後，可以Run一些Code
+            //ViewBag.Message = "Your application description page.";
 
+            //用處：記錄使用者軌跡(做Log，紀錄Action使用前後的時間)、下拉清單的預設值
             return View();
         }
 
