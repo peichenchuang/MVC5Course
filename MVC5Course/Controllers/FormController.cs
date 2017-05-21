@@ -9,7 +9,7 @@ namespace MVC5Course.Controllers
     public class FormController : BaseController
     {
         // GET: Form
-        public ActionResult Index()
+        public ActionResult Index(int CreditRatingFilter = -1, string LastNameFilter = "")
         {
             //取出 drop down list data
             var ratings = (from p in db.Client
@@ -18,12 +18,16 @@ namespace MVC5Course.Controllers
             ViewBag.CreditRatingFilter = new SelectList(ratings);
 
             var lastName = (from p in db.Client
-                           select p.LastName).Distinct().OrderBy(p => p).ToList();
+                            select p.LastName).Distinct().OrderBy(p => p).ToList();
 
             ViewBag.LastNameFilter = new SelectList(lastName);
 
-            var data = db.Client.Take(10);
-
+            var data = db.Client.Where(p => p.LastName.Contains(LastNameFilter));
+            if(CreditRatingFilter != -1)
+            {
+                data = data.Where(p => p.CreditRating == CreditRatingFilter);
+            }
+            data = data.Take(10);
             return View(data);
         }
 
@@ -40,12 +44,12 @@ namespace MVC5Course.Controllers
             var product = db.Product.Find(id);
 
             //只接 ProdcutName 其他都用原始值
-            if (TryUpdateModel(product, includeProperties: new string[] { "ProductName"}))
+            if (TryUpdateModel(product, includeProperties: new string[] { "ProductName" }))
             {
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
+
             return View();
         }
     }

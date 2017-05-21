@@ -10,9 +10,14 @@
 <body>
     <h1>Index</h1>
     <p>
-        篩選：
-        @Html.DropDownList("CreditRatingFilter", "選擇信用等級")
-        @Html.DropDownList("LastNameFilter", "選擇姓")
+        @using (Html.BeginForm("Index","Form", FormMethod.Get))
+        {
+            <span>篩選：</span>
+            @Html.DropDownList("CreditRatingFilter", "選擇信用等級")
+            @Html.DropDownList("LastNameFilter", "選擇姓")
+            <button>執行查詢</button>
+        }
+        
     </p>
     <table class="table">
         <tr>
