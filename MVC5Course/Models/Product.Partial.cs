@@ -61,7 +61,7 @@ namespace MVC5Course.Models
         [Display(Name = "數量")]
         public Nullable<decimal> Stock { get; set; }
         [Display(Name = "建立時間")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime CreatedOn { get; set; }
         public virtual ICollection<OrderLine> OrderLine { get; set; }
