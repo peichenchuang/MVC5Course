@@ -1,0 +1,18 @@
+﻿@model DateTime?
+
+@{ 
+    var htmlArrtibutes = new
+    {
+        @class = "form-control text-box single-line valid",
+        type = "date"
+    };
+}
+
+@if(Model.HasValue)
+{
+    @Html.TextBox("", Model.Value.ToString("yyyy-MM-dd"), htmlArrtibutes)
+}
+else
+{
+    @Html.TextBox("", null, htmlArrtibutes)
+}
