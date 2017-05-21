@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<MVC5Course.Models.Client>
+@using PagedList
+@using PagedList.Mvc
 
 @{
 }
@@ -71,5 +73,7 @@
     }
     
     </table>
+
+    @Html.PagedListPager(Model as IPagedList, (p)=> Url.Action("Index", new { pageNo = p}))
 </body>
 </html>
