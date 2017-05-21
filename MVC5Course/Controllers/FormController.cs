@@ -11,7 +11,20 @@ namespace MVC5Course.Controllers
         // GET: Form
         public ActionResult Index()
         {
-            return View();
+            //取出 drop down list data
+            var ratings = (from p in db.Client
+                           select p.CreditRating).Distinct().OrderBy(p => p).ToList();
+
+            ViewBag.CreditRatingFilter = new SelectList(ratings);
+
+            var lastName = (from p in db.Client
+                           select p.LastName).Distinct().OrderBy(p => p).ToList();
+
+            ViewBag.LastNameFilter = new SelectList(lastName);
+
+            var data = db.Client.Take(10);
+
+            return View(data);
         }
 
         public ActionResult Edit(int id)

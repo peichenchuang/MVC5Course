@@ -444,8 +444,8 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Clients\Details.Mobile.cshtml" />
-    <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
+    <Content Include="Views\Form\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
